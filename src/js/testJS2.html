@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./konva/konva.js"></script>
+    <meta charset="utf-8" />
+    <title>Konva  Test Demo</title>
+    <style>
+        body {
+            margin: 10;
+            padding: 10;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    //import Konva from "./konva/konva";
+
+    //import Konva from "@/js/konva/konva";
+
+
+
+    var Width = 500;
+    var Height = 500;
+    //var minX = -250; var maxX = 250;
+    //var minY  = -250; var maxY  = 250;
+    //var rangeX  = maxX - minX;
+    //var rangeY  = maxY - minY;
+    var scaleX  = 1;//Width / rangeX;
+    var scaleY = -1;//Height  / rangeY;
+
+    var stage = new Konva.Stage({
+        container: 'container',
+        x: 0,
+        y: 0,
+        width: Width,
+        height: Height,
+        scaleX: scaleX,
+        scaleY: scaleY,
+        offset: {
+            x: - Width / 2,
+            y: Height / 2
+        }
+    });
+
+    var layer = new Konva.Layer();
+    stage.add(layer);
+
+    var rect = new Konva.Rect({
+        x: -Width / 2,
+        y: -Height / 2,
+        width: Width,
+        height: Height,
+
+        stroke: 'black',
+        strokeWidth: 1
+    });
+    layer.add(rect);
+
+
+
+    var imageObj = new Image();
+    imageObj.src = '../assets/image/default_img.jpg';
+    imageObj.onload = function() {
+        var map = new Konva.Image({
+            x: 0,
+            y: 0,
+            scaleY: -1,
+            image: imageObj,
+            width: 123,
+            height: 123
+        });
+
+        //layer.add(map);
+        //layer.batchDraw();
+    };
+
+
+    var rect1 = new Konva.Rect({
+        x: 100,
+        y: 100,
+        width: 50,
+        height: 50,
+        scaleY: -1,
+
+        stroke: 'black',
+        strokeWidth: 2
+    });
+    layer.add(rect1);
+
+    var position = new Konva.Text(
+        {
+            fontSize: 7,
+            x: -200,
+            y: 200,
+            scaleY: -1,
+            verticalAlign: 'top'
+        });
+
+    layer.add(position);
+
+    var t0 = new Konva.Text(
+        {
+            fontSize: 17,
+            x: 0,
+            y: 0,
+            fontFamily: 'KenPixel',
+            text: 'Center',
+            scaleY: -1,
+            verticalAlign: 'top'
+
+        });
+    var t1 = new Konva.Text(
+        {
+            fontSize: 7,
+            x: 50,
+            y: 50,
+            text: 'Top\nRight',
+            fill: 'blue',
+            scaleY: -1,
+            verticalAlign: 'top'
+        });
+    var t2 = new Konva.Text(
+        {
+            fontSize: 7,
+            x: -50,
+            y: 50,
+            text: 'Top\nLeft',
+            fill: 'blue',
+            scaleY: -1,
+            verticalAlign: 'top'
+        });
+    var t3 = new Konva.Text(
+        {
+            fontSize: 7,
+            x: 50,
+            y: -50,
+            text: 'Bottom\nRight',
+            fill: 'blue',
+            scaleY: -1,
+            verticalAlign: 'top'
+        });
+    var t4 = new Konva.Text(
+        {
+            fontSize: 7,
+            x: -50,
+            y: -50,
+            text: 'Bottom\nLeft',
+            fill: 'blue',
+            scaleY: -1,
+            verticalAlign: 'top'
+        });
+    layer.add(t0);
+    layer.add(t1);
+    layer.add(t2);
+    layer.add(t3);
+    layer.add(t4);
+
+    layer.getContext().font  = "800 30px Microsoft JhengHei";
+    layer.getContext().fillStyle = "#000";
+    layer.getContext().fillText('cpyName', 10, 20);
+
+
+    var yaxis = new Konva.Arrow({
+        points: [0, 250, 0, -250],
+        pointerLength: 0.3,
+        pointerWidth: 0.2,
+        pointerAtBeginning: true,
+        fill: 'green',
+        stroke: 'green',
+        strokeWidth: 1
+    });
+    layer.add(yaxis);
+
+    var xaxis = new Konva.Arrow({
+        points: [250, 0, -250,0],
+        pointerLength: 0.3,
+        pointerWidth: 0.2,
+        pointerAtBeginning: true,
+        fill: 'green',
+        stroke: 'green',
+        strokeWidth: 1
+    });
+    layer.add(xaxis);
+
+    var circle = new Konva.Circle({
+        x: 0,
+        y: 0,
+        radius: 8,
+        fill: 'purple',
+        stroke: 'purple',
+        strokeWidth: 0,
+        draggable: true
+    });
+
+    layer.add(circle);
+
+    layer.draw();
+
+    function updateText(e) {
+        position.text('(' + Math.round(e.target.x()) + ', ' + Math.round(e.target.y()) + ')');
+        console.log('(' + Math.round(e.target.x()) + ', ' + Math.round(e.target.y()) + ')');
+        layer.batchDraw();
+    }
+
+    circle.on('dragmove', updateText);
+
+
+</script>
+
+<style lang="less">
+  @import '../assets/font/font.css';
+</style>
+
+</body>
+</html>

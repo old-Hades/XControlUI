@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="./konva/konva.js"></script>
+    <meta charset="utf-8" />
+    <title>Konva  Test Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    //import Konva from "./konva/konva";
+
+    var width = window.innerWidth;
+    var height = window.innerHeight;
+
+    var stage = new Konva.Stage({
+        container: 'container',
+        width: width,
+        height: height,
+        scaleY: -1,
+        offsetX: -width / 2,
+        offsetY: -height / 2,
+    });
+
+    //var backgroundLayer = new Konva.FastLayer();
+    var backgroundLayer = new Konva.Layer({ listening: false});
+    stage.add(backgroundLayer);
+    //画网格
+    /*for (var i = 0; i < width; i += 5){
+        for (var j = 0; j < height; j += 5){
+            var line = new Konva.Line({
+                x: i,
+                y: j,
+                points: [0, j, width, j],
+                stroke: 'red',
+                strokeWidth: 1,
+                tension: 1
+            });
+
+            backgroundLayer.add(line);
+        }
+    };
+    for (var i = 0; i < 1000; i ++){
+        var line = new Konva.Line({
+            x: i,
+            y: 123,
+            points: [Math.random(), Math.random(), Math.random() * width, Math.random() * height],
+            stroke: 'green',
+            strokeWidth: 1,
+            tension: 1
+        });
+
+        backgroundLayer.add(line);
+    }*/
+    //(x - x 0) / w, (y1 - y) / h
+    //于端点  X=  46.5001  Y= 259.8750  Z=   0.0000
+    //于端点  X= 349.3999  Y= 259.8750  Z=   0.0000
+    //于端点  X= 349.3999  Y=  65.6827  Z=   0.0000
+    //于端点  X=  46.5001  Y=  65.6827  Z=   0.0000
+    //viewBox="46.500056 -259.875  302.899809 194.192308"
+    var path1 = new Konva.Path({
+        x: 0,
+        y: 0,
+        stroke: 'green',
+        strokeWidth: 1,
+        data: 'M' + (46.5001 - 46.500056) * width / 302.899809 + ',' + (259.875 - 259.8750) * height / 194.192308
+            + ',' + (349.3999 - 46.500056) * width / 302.899809 + ',' + (259.875 - 259.8750) * height / 194.192308
+            + ',' + (349.3999 - 46.500056) * width / 302.899809 + ',' + (259.875 - 65.6827) * height / 194.192308
+            + ',' + (46.5001 - 46.500056) * width / 302.899809 + ',' + (259.875 - 65.6827) * height / 194.192308
+            + ',' + (46.5001 - 46.500056) * width / 302.899809 + ',' + (259.875 - 259.8750) * height / 194.192308
+    });
+    backgroundLayer.add(path1);
+
+    //圆心 点， X=  79.2319  Y= 225.0865  Z=   0.0000
+    //半径   24.0214
+    var circle1 = new Konva.Circle({
+        x: (79.2319 - 46.500056) * width / 302.899809,
+        y: (259.875 - 225.0865) * height / 194.192308,
+        stroke: 'green',
+        strokeWidth: 1,
+        radius: 24.0214 * (width / 302.899809 + height / 194.192308) / 2
+    });
+    backgroundLayer.add(circle1);
+    console.log(circle1);
+
+    backgroundLayer.draw();
+    /*backgroundLayer.cache({
+        x: 0,
+        y: 0,
+        width: width,
+        height: height,
+    });*/
+
+
+    // add canvas element
+    var layer = new Konva.Layer();
+    stage.add(layer);
+
+    var circle2 = new Konva.Circle({
+        x: 0,
+        y: 0,
+        stroke: 'red',
+        strokeWidth: 1,
+        radius: 5
+    });
+    layer.add(circle2);
+    var circle3 = new Konva.Circle({
+        x: -100,
+        y: -100,
+        stroke: 'red',
+        strokeWidth: 1,
+        radius: 5
+    });
+    layer.add(circle3);
+
+    var foregroundLayer = new Konva.Layer({ listening: false});
+    stage.add(foregroundLayer);
+
+    for (var i = 1; i < 10; i++) {
+        for (var j = 1; j < 10; j ++) {
+            var ffuRect = new Konva.FFURect({
+                x: i * (60 + 20),
+                y: j * (60 + 20),
+                width: 60,
+                height: 60,
+                fill: '#00D2FF',
+                stroke: 'black',
+                strokeWidth: 1,
+                draggable: true
+            });
+            //layer.add(ffuRect);
+
+            var mapPoint = new Konva.HeatMapPoint({
+                x: i * (60 + 20),
+                y: j * (60 + 20),
+                width: 60,
+                height: 60,
+                fill: '#00D2FF',
+                stroke: 'black',
+                strokeWidth: 1,
+                radius: 100,
+                currCount: 1000 * Math.random(),
+                minCount: 1,
+                maxCount: 1000
+
+                //draggable: true
+            });
+            foregroundLayer.add(mapPoint);
+
+            //mapPoint.filters([HeatMapFilter]);
+
+            ffuRect.on('click', function () {
+                this.fill('red');
+                this.draw();
+                //ffuRect.setScale(1.2, 1.2);
+            });
+            ffuRect.on('dblclick', function () {
+                this.fill('darkgrey');
+                this.draw();
+                //ffuRect.setScale(1.2, 1.2);
+            });
+
+
+        }
+    }
+
+    foregroundLayer.draw();
+    layer.draw();
+
+
+    // 4. 颜色映射
+    /*let palette = createPalette();
+    var imageData = foregroundLayer.getContext().getImageData(0, 0, width, height);
+    console.log(width);
+    console.log(height);
+    let data = imageData.data;
+    console.log(data.length);
+    for (let i = 3; i < data.length; i += 4) {
+        let alpha = data[i];
+        let color = palette.pickColor(alpha);
+        data[i - 3] = 234;//color[0];
+        data[i - 2] = 234;//color[1];
+        data[i - 1] = 234;//color[2];
+    }
+    //foregroundLayer.getContext().putImageData(imageData, 0, 0);//, width, height);
+    foregroundLayer.draw();
+    var foregroundLayer1 = new Konva.Layer({ listening: false});
+    stage.add(foregroundLayer1);
+    foregroundLayer1.getContext().putImageData(imageData, 0, 0, 0, 0, width, height);
+    console.log(width);
+    console.log(height);*/
+
+    let palette = createPalette();
+    // lets define a custom filter:
+    var HeatMapFilter = function (imageData) {
+        // make all pixels opaque 100%
+        var nPixels = imageData.data.length;
+        for (var i = 3; i < nPixels; i += 4) {
+            let alpha = imageData.data[i];
+            let color = palette.pickColor(alpha);
+            imageData.data[i - 3] = color[0];
+            imageData.data[i - 2] = color[1];
+            imageData.data[i - 1] = color[2];
+        }
+    };
+
+    foregroundLayer.cache();
+    foregroundLayer.filters([HeatMapFilter]);
+
+    foregroundLayer.draw();
+
+    // 创建canvas
+    let tempCanvas = document.createElement("canvas");
+    tempCanvas.width = width;
+    tempCanvas.height = height;
+    let tempCxt = tempCanvas.getContext("2d");
+    //foregroundLayer1.getContext()._context.putImageData(imageData, 0, 0);
+    //tempCxt.putImageData(imageData, 0, 0);
+
+
+
+    // 创建调色盘
+    function createPalette() {
+        let colorStops = {
+            0: "#0ff",
+            0.2: "#0f0",
+            0.4: "#ff0",
+            1: "#f00"
+        };
+        let width = 256, height = 2;
+
+        // 创建canvas
+        let palatteCanvas = document.createElement("canvas");
+        palatteCanvas.width = width;
+        palatteCanvas.height = height;
+        let ctx = palatteCanvas.getContext("2d");
+
+        // 创建线性渐变色
+        let linearGradient = ctx.createLinearGradient(0, 0, width, 1);
+        for (const key in colorStops) {
+            linearGradient.addColorStop(key, colorStops[key]);
+        }
+
+        // 绘制渐变色条
+        ctx.fillStyle = linearGradient;
+        ctx.fillRect(0, 0, width, height);
+
+        // 读取像素值
+        let imageData = ctx.getImageData(0, 0, width, 1).data
+
+        return {
+            //canvas: palatteCanvas,
+            pickColor: function (position) {
+                return imageData.slice(position * 4, position * 4 + 3)
+            }
+        }
+    }
+
+    stage.on('clicked', function (e) {
+        e.evt.preventDefault();
+        // e.target is a clicked Konva.Shape or current stage if you clicked on empty space
+        console.log('clicked on', e.target);
+        console.log(
+            'usual click on ' + JSON.stringify(stage.getPointerPosition())
+        );
+    });
+
+    stage.on('click', (e) => {
+        e.evt.preventDefault();
+        // e.target is a clicked Konva.Shape or current stage if you clicked on empty space
+        console.log('click on', e.target);
+        console.log(
+            'usual click on ' + JSON.stringify(stage.getPointerPosition())
+        );
+    });
+
+    var scaleBy = 1.1;//1.01;
+    stage.on('wheel', (e) => {
+        e.evt.preventDefault();
+        var oldScale = stage.scaleX();
+
+        var pointer = stage.getPointerPosition();
+
+        var mousePointTo = {
+            x: (pointer.x - stage.x()) / oldScale,
+            y: (pointer.y - stage.y()) / oldScale,
+        };
+
+        var newScale =
+            e.evt.deltaY > 0 ? oldScale / scaleBy : oldScale * scaleBy;
+
+        stage.scale({ x: newScale, y: newScale });
+
+        var newPos = {
+            x: pointer.x - mousePointTo.x * newScale,
+            y: pointer.y - mousePointTo.y * newScale,
+        };
+        stage.position(newPos);
+        //stage.batchDraw();
+        layer.batchDraw();
+        //backgroundLayer.clearCache();
+        backgroundLayer.batchDraw();
+        foregroundLayer.batchDraw();
+        console.log('wheel on', e.target);
+    });
+
+
+</script>
+</body>
+</html>

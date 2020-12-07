@@ -1,0 +1,81 @@
+{
+  "name": "longyu",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.11.5",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/runtime": "^7.11.2",
+    "@topology/chart-diagram": "^0.2.24",
+    "ant-design-vue": "^1.6.4",
+    "axios": "^0.19.2",
+    "babel-preset-mobx": "^2.0.0",
+    "core-js": "^3.6.5",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "echarts": "^4.8.0",
+    "echarts-liquidfill": "^2.0.6",
+    "jquery": "^3.5.1",
+    "js-file-download": "^0.4.12",
+    "konva": "^7.0.6",
+    "less": "^3.12.2",
+    "less-loader": "^7.0.1",
+    "lodash-es": "^4.17.15",
+    "moment": "latest",
+    "net": "^1.0.2",
+    "nprogress": "^0.2.0",
+    "reqwest": "^2.0.5",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "script-ext-html-webpack-plugin": "^2.1.4",
+    "sockjs-client": "^1.5.0",
+    "stompjs": "^2.3.3",
+    "vue": "^2.6.11",
+    "vue-color": "^2.7.1",
+    "vue-konva": "^2.1.4",
+    "vue-loader": "^15.9.3",
+    "vue-quill-editor": "^3.0.6",
+    "vue-router": "^3.3.4",
+    "vue-stomp": "0.0.5",
+    "vue-tabs": "^0.3.1",
+    "vue-virtual-scroller": "^1.0.10"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@vue/cli-plugin-babel": "~4.4.0",
+    "@vue/cli-plugin-eslint": "~4.4.0",
+    "@vue/cli-service": "~4.4.0",
+    "babel-eslint": "^10.1.0",
+    "compression-webpack-plugin": "^6.0.3",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "svg-sprite-loader": "^5.0.0",
+    "vue-infinite-scroll": "^2.0.2",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/essential"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}
